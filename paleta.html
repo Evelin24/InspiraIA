@@ -159,12 +159,33 @@
             <a href="nossosite.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i> Nosso Site</a>
           </li>
           <li class="nav-item">
+            <a href="mapa.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i>Mapa</a>
+          </li>
+          <li class="nav-item">
             <a href="chat.html" target="_blank" class="btn btn-danger btn-round">Chat IA</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <script>
+    const nav = document.querySelector('nav.navbar');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY === 0) {
+        nav.style.top = '0';
+        nav.style.opacity = '1';
+        nav.style.pointerEvents = 'auto'; // ativa clique
+        nav.style.transition = 'top 0.3s ease, opacity 0.3s ease';
+        } else {
+        nav.style.top = '-80px'; // esconde o menu para cima (ajuste o valor conforme a altura do menu)
+        nav.style.opacity = '0';
+        nav.style.pointerEvents = 'none'; // desativa clique quando oculto
+        nav.style.transition = 'top 0.3s ease, opacity 0.3s ease';
+        }
+    });
+   </script>
 
   <!-- Faixa com imagem de fundo -->
   <div style="position: relative; background-image: url('./imagens/imagembanne3.jpg'); background-size: cover; background-position: center; height: 130px;">
@@ -356,6 +377,22 @@
     </div>
   </div>
 
+<div class="container-transparente">
+  <p></p>
+</div>
+
+<style>
+  .container-transparente {
+    background-color: rgba(255, 255, 255, 0.3); /* branco com transparência */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    color: #000;
+    backdrop-filter: blur(5px); /* opcional: deixa o fundo desfocado */
+    margin: 20px auto;
+    text-align: center;
+  }
+</style>
 
 
 
@@ -364,7 +401,6 @@
   <p>Veja qual dessas combina mais com você.</p>
 
  <!-- Paletas brancas -->
-
     <div class="grid-container">
     <div class="palette-box">
       <div class="colors-row">
@@ -471,7 +507,6 @@
     </div>
 
     <!-- Paletas Amarelo -->
-
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#fadf33"></div>
@@ -524,10 +559,7 @@
       </div>
     </div>
 
-
-
     <!-- Paletas verde -->
-
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#9bd168"></div>
@@ -580,7 +612,6 @@
       </div>
     </div>
 
-    
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#35ca14"></div>
@@ -633,13 +664,7 @@
       </div>
     </div>
 
-
-
-
-
      <!-- Paletas roxo-->
-
-
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#5e049a"></div>
@@ -693,8 +718,6 @@
     </div>
     
     <!-- Paleta Violeta -->
-
-    
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#b188be"></div>
@@ -760,8 +783,6 @@
       </div>
     </div>
 
-    
-
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#ae38a2"></div>
@@ -800,13 +821,6 @@
         <button onclick="downloadPredefinedPalette('Tons violeta', ['#e142d2','#cd32c0','#b921ad','#a5119b','#910088'])">Baixar paleta</button>
      </div>
     </div>
-
-
-
-
-
-
-
 
      <!-- Paleta Rosa -->
     <div class="palette-box">
@@ -861,8 +875,6 @@
       </div>
     </div>
 
-
-    
     <!-- Paleta Vermelho -->
     <div class="palette-box">
       <div class="colors-row">
@@ -919,9 +931,7 @@
       </div>
     </div>
 
-    
     <!-- Paleta Salmão -->
-
     <div class="palette-box">
       <div class="colors-row">
         <div style="background:#f19293"></div>
@@ -974,9 +984,6 @@
       </div>
     </div>
 
-
-
-
     <!-- Paleta Marrom Variações -->
     <div class="palette-box">
       <div class="colors-row">
@@ -991,7 +998,6 @@
       </div>
     </div>
 
-     
     <!-- Paleta Bordô Variações -->
     <div class="palette-box">
       <div class="colors-row">
@@ -1019,10 +1025,6 @@
         <button onclick="downloadPredefinedPalette('Marrom claro', ['#543833','#684b46','#7c5e58','#91716b','#a5847e'])">Baixar paleta</button>
       </div>
     </div>
-
-
-
-
 
     <!-- Paleta Cinzas -->
     <div class="palette-box">
@@ -1067,6 +1069,8 @@
     </div>
   </div>
 </section>
+
+<section>
 
  <section id="popularPalettes">
   <h2>Cículo de Cores</h2>
@@ -1156,23 +1160,42 @@
   });
 </script>
 
-
-
-
-
-
-
-
-
-
-
+</section>
 
 
   <!-- Seus scripts JS (baixe PDF etc.) -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
    <script src="paleta.js"></script>
 
-  
-
 </body>
+
+<section>
+    <footer class="footer footer-black  footer-white ">
+      <div class="container">
+        <div class="row">
+          <nav class="footer-nav">
+            <ul>
+              <li>
+                Lorena
+              </li>
+              <li>
+                Lavínia
+              </li>
+              <li>
+                Evelin
+              </li>
+            </ul>
+          </nav>
+          <div class="credits ml-auto">
+            <span class="copyright">
+              ©
+              <script>
+                document.write(new Date().getFullYear())
+              </script><i class="fa fa-heart heart"></i> Criado por, Evelin 
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+</section>
 </html>
