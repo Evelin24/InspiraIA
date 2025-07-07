@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport" />
+  <title>InspiraIA - Projeto 4 de Mídias Digitais</title>
+
+  <!-- Ícones -->
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+
+  <!-- Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./assets/css/paper-kit.css?v=2.2.0" rel="stylesheet" />
+  <link href="./assets/demo/demo.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="paleta.css">
+
+
+  <!-- Seus estilos personalizados -->
+  <style>
+    /* estilos das paletas populares */
+    #popularPalettes {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    #popularPalettes h2 {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+      color: #111;
+    }
+    #popularPalettes p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 40px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .palette-box {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .colors-row {
+      display: flex;
+      height: 80px;
+    }
+    .colors-row div {
+      flex: 1;
+    }
+    .palette-footer {
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .palette-footer button {
+      background: none;
+      border: none;
+      color: #007bff;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+    }
+    .palette-footer button:hover {
+      text-decoration: underline;
+    }
+
+    /* estilos do círculo cromado */
+    .circle-section {
+      background: #e1e1e1;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .circle-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      color: #00bfff;
+    }
+    canvas {
+      border-radius: 50%;
+      cursor: crosshair;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+    }
+    .palette {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      gap: 15px;
+    }
+    .color-box {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      color: #000;
+    }
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 12px 24px;
+      background: #00bfff;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0099cc;
+    }
+    #limitMsg {
+      color: #f88;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body class="index-page sidebar-collapse">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="300">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="index.html">InspiraIA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="nossosite.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i> Nosso Site</a>
+          </li>
+          <li class="nav-item">
+            <a href="chat.html" target="_blank" class="btn btn-danger btn-round">Chat IA</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Faixa com imagem de fundo -->
+  <div style="position: relative; background-image: url('./imagens/imagembanne3.jpg'); background-size: cover; background-position: center; height: 130px;">
+    <div style="background-color: rgba(0,0,0,0.5); width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>
+  </div>
+
+  <!-- Conteúdo decorativo do topo -->
+  <div class="content-center" style="position: relative; z-index: 1;">
+    <div class="container">
+      <div class="title-brand text-center text-white">
+        <div class="fog-low" style="margin-top: 20px;"></div>
+        <div class="fog-low right" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+  </div>
+
+<!-- Fim do Menu -->
+
+
+
+  <!-- Paletas Populares -->
+ <section id="popularPalettes">
+  <h2>Paletas populares</h2>
+  <p>Escolha entre milhares de cores a melhor paleta para você.</p>
+
+  
+
+      <div class="grid-container">
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#999999"></div>
+        <div style="background:#59C3D1"></div>
+        <div style="background:#00FFF7"></div>
+        <div style="background:#C3FFC3"></div>
+        <div style="background:#E2E2E2"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Gelo Fresco', ['#999999','#59C3D1','#00FFF7','#C3FFC3','#E2E2E2'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#EBAF91"></div>
+        <div style="background:#FBEFB5"></div>
+        <div style="background:#E3D36B"></div>
+        <div style="background:#A6C48A"></div>
+        <div style="background:#726654"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Terrosos Claros', ['#EBAF91','#FBEFB5','#E3D36B','#A6C48A','#726654'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#4CFFFF"></div>
+        <div style="background:#87BDE9"></div>
+        <div style="background:#B285CF"></div>
+        <div style="background:#D749B5"></div>
+        <div style="background:#FF00B3"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Pop Neon', ['#4CFFFF','#87BDE9','#B285CF','#D749B5','#FF00B3'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#665041"></div>
+        <div style="background:#944C48"></div>
+        <div style="background:#DC545B"></div>
+        <div style="background:#F27B51"></div>
+        <div style="background:#FFA843"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Madeira Quente', ['#665041','#944C48','#DC545B','#F27B51','#FFA843'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#F94C39"></div>
+        <div style="background:#432C2E"></div>
+        <div style="background:#859A84"></div>
+        <div style="background:#A7CFA5"></div>
+        <div style="background:#F5E78F"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verão Escuro', ['#F94C39','#432C2E','#859A84','#A7CFA5','#F5E78F'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#FDF0C2"></div>
+        <div style="background:#F4E7A3"></div>
+        <div style="background:#C9D19A"></div>
+        <div style="background:#82BFA3"></div>
+        <div style="background:#665C4C"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Areia e Folha', ['#FDF0C2','#F4E7A3','#C9D19A','#82BFA3','#665C4C'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#3B3133"></div>
+        <div style="background:#063B5B"></div>
+        <div style="background:#3E65AF"></div>
+        <div style="background:#009DDB"></div>
+        <div style="background:#00E7FF"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Marinho Cool', ['#3B3133','#063B5B','#3E65AF','#009DDB','#00E7FF'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#D8CBA9"></div>
+        <div style="background:#F59D00"></div>
+        <div style="background:#F8513F"></div>
+        <div style="background:#168A8F"></div>
+        <div style="background:#1D1700"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Trópicos Quentes', ['#D8CBA9','#F59D00','#F8513F','#168A8F','#1D1700'])">Baixar paleta</button>
+     </div>
+    </div>
+    <!-- suas outras paletas aqui ... -->
+
+    <!-- NOVAS PALLETAS -->
+
+    <!-- Paleta Tons de Bege -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#D8D3AB"></div>
+        <div style="background:#B0B19F"></div>
+        <div style="background:#D6DD90"></div>
+        <div style="background:#FFFAD3"></div>
+        <div style="background:#C9D19A"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons de Bege', ['#D8D3AB','#B0B19F','#D6DD90','#FFFAD3','#C9D19A'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Bordô Variações -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#784D5F"></div>
+        <div style="background:#BA456A"></div>
+        <div style="background:#D6496C"></div>
+        <div style="background:#D04969"></div>
+        <div style="background:#7E638C"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Bordô Variações', ['#784D5F','#BA456A','#D6496C','#D04969','#7E638C'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#D5D8C7"></div>
+        <div style="background:#D4D6CE"></div>
+        <div style="background:#D3D5D5"></div>
+        <div style="background:#D1D3DC"></div>
+        <div style="background:#D0D2E3"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Monocromático de tons Claros', ['#D5D8C7','#D4D6CE','#D3D5D5','#D1D3DC','#D0D2E3'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#7DB8A2"></div>
+        <div style="background:#82BFA3"></div>
+        <div style="background:#665C4C"></div>
+        <div style="background:#726654"></div>
+        <div style="background:#859A84"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Cinzas e Verdes', ['#7DB8A2','#82BFA3','#665C4C','#726654','#859A84'])">Baixar paleta</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ <!-- Paletas Populares -->
+  <h2>Paletas Monocromáticas</h2>
+  <p>Veja qual dessas combina mais com você.</p>
+
+ <!-- Paletas brancas -->
+
+    <div class="grid-container">
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f2dbde"></div>
+        <div style="background:#f5e4e6"></div>
+        <div style="background:#f9edef"></div>
+        <div style="background:#fcf6f7"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#f2dbde','#f5e4e6','#f9edef','#fcf6f7','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#b4b4b4"></div>
+        <div style="background:#c7c7c7"></div>
+        <div style="background:#dadada"></div>
+        <div style="background:#ececec"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons claros', ['#b4b4b4','#c7c7c7','#dadada','#ececec','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#ebbaee"></div>
+        <div style="background:#f0cbf2"></div>
+        <div style="background:#f5ddf7"></div>
+        <div style="background:#faeefb"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons claros', ['#ebbaee','#f0cbf2','#f5ddf7','#faeefb','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#a8d1b4"></div>
+        <div style="background:#beddc7"></div>
+        <div style="background:#d4e8da"></div>
+        <div style="background:#e9f4ec"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#a8d1b4','#beddc7','#d4e8da','#e9f4ec','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+     <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#cef9ae"></div>
+        <div style="background:#dbfac2"></div>
+        <div style="background:#e7fcd7"></div>
+        <div style="background:#f3fdeb"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#cef9ae','#dbfac2','#e7fcd7','#f3fdeb','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#d4f5ef"></div>
+        <div style="background:#dff8f3"></div>
+        <div style="background:#eafaf7"></div>
+        <div style="background:#f4fdfb"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#d4f5ef','#dff8f3','#eafaf7','#f4fdfb','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#a4dcf9"></div>
+        <div style="background:#bbe5fb"></div>
+        <div style="background:#d2eefc"></div>
+        <div style="background:#e8f6fe"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#a4dcf9','#bbe5fb','#d2eefc','#e8f6fe','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f8ffc9"></div>
+        <div style="background:#faffd7"></div>
+        <div style="background:#fcffe4"></div>
+        <div style="background:#fdfff2"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons claros', ['#f8ffc9','#faffd7','#fcffe4','#fdfff2','#ffffff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paletas Amarelo -->
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#fadf33"></div>
+        <div style="background:#fbe74e"></div>
+        <div style="background:#fdef69"></div>
+        <div style="background:#fef784"></div>
+        <div style="background:#ffff9f"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Amarelo', ['#fadf33','#fbe74e','#fdef69','#fef784','#ffff9f'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#fbee98"></div>
+        <div style="background:#fcf2ab"></div>
+        <div style="background:#fdf6be"></div>
+        <div style="background:#fefbd1"></div>
+        <div style="background:#ffffe4"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Amarelo claro', ['#fbee98','#fcf2ab','#fdf6be','#fefbd1','#ffffe4'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#e5c01e"></div>
+        <div style="background:#ecd03a"></div>
+        <div style="background:#f2e055"></div>
+        <div style="background:#f9ef71"></div>
+        <div style="background:#ffff8c"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Amarelo alguma coisa', ['#e5c01e','#ecd03a','#f2e055','#f9ef71','#ffff8c'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#cec61a"></div>
+        <div style="background:#bab414"></div>
+        <div style="background:#a7a30d"></div>
+        <div style="background:#939107"></div>
+        <div style="background:#7f7f00"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Amarelo escuro', ['#cec61a','#bab414','#a7a30d','#939107','#7f7f00'])">Baixar paleta</button>
+      </div>
+    </div>
+
+
+
+    <!-- Paletas verde -->
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#9bd168"></div>
+        <div style="background:#b4dd81"></div>
+        <div style="background:#cde899"></div>
+        <div style="background:#e6f4b2"></div>
+        <div style="background:#ffffca"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde pra amarelo', ['#9bd168','#b4dd81','#cde899','#e6f4b2','#ffffca'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#397f31"></div>
+        <div style="background:#589f4e"></div>
+        <div style="background:#77bf6c"></div>
+        <div style="background:#97df89"></div>
+        <div style="background:#b6ffa7"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde do escuro para o claro', ['#397f31','#589f4e','#77bf6c','#97df89','#b6ffa7'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#6a7f29"></div>
+        <div style="background:#7c913a"></div>
+        <div style="background:#8ea24a"></div>
+        <div style="background:#9fb45b"></div>
+        <div style="background:#b1c56b"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde', ['#6a7f29','#7c913a','#8ea24a','#9fb45b','#b1c56b'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#bfd99d"></div>
+        <div style="background:#94ac76"></div>
+        <div style="background:#697e4e"></div>
+        <div style="background:#3e5127"></div>
+        <div style="background:#132400"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde do claro pro escuro', ['#bfd99d','#94ac76','#697e4e','#3e5127','#132400'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#35ca14"></div>
+        <div style="background:#53d730"></div>
+        <div style="background:#71e54d"></div>
+        <div style="background:#8ff269"></div>
+        <div style="background:#adff85"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde amarelado', ['#35ca14','#53d730','#71e54d','#8ff269','#adff85'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#9cb510"></div>
+        <div style="background:#89a40c"></div>
+        <div style="background:#779208"></div>
+        <div style="background:#648104"></div>
+        <div style="background:#516f00"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde musgo', ['#9cb510','#89a40c','#779208','#648104','#516f00'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#4da445"></div>
+        <div style="background:#3a9234"></div>
+        <div style="background:#278123"></div>
+        <div style="background:#136f11"></div>
+        <div style="background:#005d00"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde', ['#4da445','#2d1785','#278123','#136f11','#005d00'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#8ff269"></div>
+        <div style="background:#a1f57a"></div>
+        <div style="background:#b2f88a"></div>
+        <div style="background:#c4fc9b"></div>
+        <div style="background:#d5ffab"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Verde do claro meio neon', ['#8ff269','#a1f57a','#b2f88a','#c4fc9b','#d5ffab'])">Baixar paleta</button>
+      </div>
+    </div>
+
+
+
+
+
+     <!-- Paletas roxo-->
+
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#5e049a"></div>
+        <div style="background:#4b0389"></div>
+        <div style="background:#380277"></div>
+        <div style="background:#250166"></div>
+        <div style="background:#120054"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Roxo escuro', ['#5e049a','#4b0389','#380277','#250166','#120054'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#300d4a"></div>
+        <div style="background:#240a3c"></div>
+        <div style="background:#18072e"></div>
+        <div style="background:#0c0320"></div>
+        <div style="background:#000012"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Roxo muito escuro', ['#300d4a','#240a3c','#18072e','#0c0320','#000012'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#12016d"></div>
+        <div style="background:#2d1785"></div>
+        <div style="background:#492d9e"></div>
+        <div style="background:#6442b6"></div>
+        <div style="background:#7f58ce"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Azul pra roxo', ['#12016d','#2d1785','#492d9e','#6442b6','#7f58ce'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#2d14cf"></div>
+        <div style="background:#4d2cdb"></div>
+        <div style="background:#6d45e7"></div>
+        <div style="background:#8c5df3"></div>
+        <div style="background:#ac75ff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Azul pra lilás', ['#2d14cf','#4d2cdb','#6d45e7','#8c5df3','#ac75ff'])">Baixar paleta</button>
+      </div>
+    </div>
+    
+    <!-- Paleta Violeta -->
+
+    
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#b188be"></div>
+        <div style="background:#c5a1ce"></div>
+        <div style="background:#d8badf"></div>
+        <div style="background:#ecd2ef"></div>
+        <div style="background:#ffebff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Lilás', ['#b188be','#c5a1ce','#d8badf','#ecd2ef','#ffebff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#9c29ac"></div>
+        <div style="background:#891f9a"></div>
+        <div style="background:#771589"></div>
+        <div style="background:#640a77"></div>
+        <div style="background:#510065"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Roxo', ['#9c29ac','#891f9a','#771589','#640a77','#510065'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#9f3492"></div>
+        <div style="background:#b74dab"></div>
+        <div style="background:#cf66c4"></div>
+        <div style="background:#e77edd"></div>
+        <div style="background:#ff97f6"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Violeta', ['#9f3492','#b74dab','#cf66c4','#e77edd','#ff97f6'])">Baixar paleta</button>
+      </div>
+    </div>
+     
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#b653ab"></div>
+        <div style="background:#c874c0"></div>
+        <div style="background:#db95d5"></div>
+        <div style="background:#edb5ea"></div>
+        <div style="background:#ffd6ff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Violeta claro', ['#b653ab','#c874c0','#db95d5','#edb5ea','#ffd6ff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#73286c"></div>
+        <div style="background:#621e5d"></div>
+        <div style="background:#52144d"></div>
+        <div style="background:#420a3e"></div>
+        <div style="background:#32002f"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Violeta escuro', ['#73286c','#621e5d','#52144d','#420a3e','#32002f'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#ae38a2"></div>
+        <div style="background:#942a8a"></div>
+        <div style="background:#7a1c73"></div>
+        <div style="background:#600e5b"></div>
+        <div style="background:#460043"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Violeta do claro pro escuro', ['#ae38a2','#942a8a','#7a1c73','#600e5b','#460043'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#e71f8d"></div>
+        <div style="background:#ed3da6"></div>
+        <div style="background:#f35cbf"></div>
+        <div style="background:#f97ad7"></div>
+        <div style="background:#ff98f0"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Rosa choque', ['#e71f8d','#ed3da6','#f35cbf','#f97ad7','#ff98f0'])">Baixar paleta</button>
+     </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#e142d2"></div>
+        <div style="background:#cd32c0"></div>
+        <div style="background:#b921ad"></div>
+        <div style="background:#a5119b"></div>
+        <div style="background:#910088"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons violeta', ['#e142d2','#cd32c0','#b921ad','#a5119b','#910088'])">Baixar paleta</button>
+     </div>
+    </div>
+
+
+
+
+
+
+
+
+     <!-- Paleta Rosa -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#da1fb7"></div>
+        <div style="background:#c617a5"></div>
+        <div style="background:#b21094"></div>
+        <div style="background:#9e0882"></div>
+        <div style="background:#8a0070"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Rosa e Violeta', ['#da1fb7','#c617a5','#b21094','#9e0882','#8a0070'])">Baixar paleta</button>
+      </div>
+    </div>
+    
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f577c3"></div>
+        <div style="background:#f891d2"></div>
+        <div style="background:#faaae1"></div>
+        <div style="background:#fdc4f0"></div>
+        <div style="background:#ffddff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Rosa claro', ['#f577c3','#f891d2','#faaae1','#fdc4f0','#ffddff'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#efb0db"></div>
+        <div style="background:#d294be"></div>
+        <div style="background:#b478a2"></div>
+        <div style="background:#975d85"></div>
+        <div style="background:#794169"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Rosa do claro pro escuro', ['#efb0db','#d294be','#b478a2','#975d85','#794169'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#cc3688"></div>
+        <div style="background:#d950a1"></div>
+        <div style="background:#e66bb9"></div>
+        <div style="background:#f285d2"></div>
+        <div style="background:#ff9fea"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Rosa rosa', ['#cc3688','#d950a1','#e66bb9','#f285d2','#ff9fea'])">Baixar paleta</button>
+      </div>
+    </div>
+
+
+    
+    <!-- Paleta Vermelho -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f43002"></div>
+        <div style="background:#de2402"></div>
+        <div style="background:#c81801"></div>
+        <div style="background:#b20c01"></div>
+        <div style="background:#9c0000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Vermelho vermelho', ['#f43002','#de2402','#c81801','#b20c01','#9c0000'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#d25245"></div>
+        <div style="background:#b43d34"></div>
+        <div style="background:#952922"></div>
+        <div style="background:#771411"></div>
+        <div style="background:#580000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('tons de Vermelho', ['#d25245','#b43d34','#952922','#771411','#580000'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#ae1717"></div>
+        <div style="background:#c2322c"></div>
+        <div style="background:#d74d41"></div>
+        <div style="background:#eb6856"></div>
+        <div style="background:#ff836b"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Vermelho claro', ['#ae1717','#c2322c','#d74d41','#eb6856','#ff836b'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#aa0a1d"></div>
+        <div style="background:#960816"></div>
+        <div style="background:#82050f"></div>
+        <div style="background:#6e0307"></div>
+        <div style="background:#5a0000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Vermelho', ['#aa0a1d','#960816','#82050f','#6e0307','#5a0000'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    
+    <!-- Paleta Salmão -->
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f19293"></div>
+        <div style="background:#f4adae"></div>
+        <div style="background:#f8c8c9"></div>
+        <div style="background:#fbe4e4"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons claros', ['#f19293','#f4adae','#f8c8c9','#fbe4e4','#ffffff'])">Baixar paleta</button>
+     </div>
+    </div>
+    
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#fa9bad"></div>
+        <div style="background:#e6899c"></div>
+        <div style="background:#d3788a"></div>
+        <div style="background:#bf6679"></div>
+        <div style="background:#ab5467"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Tons de salmão', ['#fa9bad','#e6899c','#d3788a','#bf6679','#ab5467'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#b46d7b"></div>
+        <div style="background:#91525c"></div>
+        <div style="background:#6f363d"></div>
+        <div style="background:#4d1b1f"></div>
+        <div style="background:#2b0000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Salmão escuro', ['#b46d7b','#91525c','#6f363d','#4d1b1f','#2b0000'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#f77478"></div>
+        <div style="background:#f98d90"></div>
+        <div style="background:#fba7a8"></div>
+        <div style="background:#fdc0c0"></div>
+        <div style="background:#ffd9d8"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Salmão claro', ['#f77478','#f98d90','#fba7a8','#fdc0c0','#ffd9d8'])">Baixar paleta</button>
+      </div>
+    </div>
+
+
+
+
+    <!-- Paleta Marrom Variações -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#815a5f"></div>
+        <div style="background:#6b454b"></div>
+        <div style="background:#553137"></div>
+        <div style="background:#3f1c22"></div>
+        <div style="background:#29080e"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Bordô escuro', ['#815a5f','#6b454b','#553137','#3f1c22','#29080e'])">Baixar paleta</button>
+      </div>
+    </div>
+
+     
+    <!-- Paleta Bordô Variações -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#502923"></div>
+        <div style="background:#5c342d"></div>
+        <div style="background:#683f38"></div>
+        <div style="background:#754a42"></div>
+        <div style="background:#81554d"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Marrom', ['#502923','#5c342d','#683f38','#754a42','#81554d'])">Baixar paleta</button>
+      </div>
+    </div>
+    
+    <!-- Paleta Bordô Variações -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#543833"></div>
+        <div style="background:#684b46"></div>
+        <div style="background:#7c5e58"></div>
+        <div style="background:#91716b"></div>
+        <div style="background:#a5847e"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Marrom claro', ['#543833','#684b46','#7c5e58','#91716b','#a5847e'])">Baixar paleta</button>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Paleta Cinzas -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#4f4f4f"></div>
+        <div style="background:#3b3b3b"></div>
+        <div style="background:#282828"></div>
+        <div style="background:#141414"></div>
+        <div style="background:#000000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Cinza para preto', ['#4f4f4f','#3b3b3b','#282828','#141414','#000000'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#080808"></div>
+        <div style="background:#202020"></div>
+        <div style="background:#383838"></div>
+        <div style="background:#4f4f4f"></div>
+        <div style="background:#676767"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Preto mais claro até cinza', ['#080808','#202020','#383838','#4f4f4f','#676767'])">Baixar paleta</button>
+      </div>
+    </div>
+
+    <!-- Paleta Cinzas e Verdes -->
+    <div class="palette-box">
+      <div class="colors-row">
+        <div style="background:#212121"></div>
+        <div style="background:#191919"></div>
+        <div style="background:#111111"></div>
+        <div style="background:#080808"></div>
+        <div style="background:#000000"></div>
+      </div>
+      <div class="palette-footer">
+        <button onclick="downloadPredefinedPalette('Preto', ['#212121','#191919','#111111','#080808','#000000'])">Baixar paleta</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <section id="popularPalettes">
+  <h2>Cículo de Cores</h2>
+  <p>Monte a sua própria paleta.</p>
+  <!-- Círculo Cromado Interativo -->
+  <!-- HTML -->
+
+<section id="color-wheel-section">
+  <div id="color-picker-container"></div>
+
+  <div class="selected-colors">
+    <h3>Paleta Selecionada:</h3>
+    <div id="selectedColors" class="colors-preview"></div>
+  </div>
+
+  <div class="color-buttons">
+    <button id="addColorBtn">Adicionar Cor</button>
+    <button id="resetColorsBtn">Reiniciar</button>
+    <button id="downloadPaletteBtn">Baixar paleta (PDF)</button>
+  </div>
+</section>
+
+<script src="https://unpkg.com/@jaames/iro@5"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const colorPicker = new iro.ColorPicker("#color-picker-container", {
+    width: 250,
+    color: "#ff6600",
+    layout: [
+      { component: iro.ui.Wheel },
+      { component: iro.ui.Slider, options: { sliderType: 'value' } }
+    ]
+  });
+
+  const selectedColors = [];
+  const maxColors = 5;
+  const selectedColorsDiv = document.getElementById("selectedColors");
+  const addColorBtn = document.getElementById("addColorBtn");
+  const resetColorsBtn = document.getElementById("resetColorsBtn");
+  const downloadBtn = document.getElementById("downloadPaletteBtn");
+
+  function renderColors() {
+    selectedColorsDiv.innerHTML = "";
+    selectedColors.forEach(color => {
+      const colorDiv = document.createElement("div");
+      colorDiv.style.backgroundColor = color;
+      selectedColorsDiv.appendChild(colorDiv);
+    });
+  }
+
+  addColorBtn.addEventListener("click", () => {
+    if (selectedColors.length >= maxColors) {
+      alert("Você já escolheu 5 cores.");
+      return;
+    }
+
+    const currentColor = colorPicker.color.hexString;
+    selectedColors.push(currentColor);
+    renderColors();
+  });
+
+  resetColorsBtn.addEventListener("click", () => {
+    selectedColors.length = 0;
+    renderColors();
+  });
+
+  downloadBtn.addEventListener("click", () => {
+    if (selectedColors.length === 0) {
+      alert("Nenhuma cor selecionada.");
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Minha Paleta de Cores", 20, 20);
+
+    selectedColors.forEach((color, i) => {
+      doc.setFillColor(color);
+      doc.rect(20, 30 + i * 25, 30, 20, 'F');
+      doc.setTextColor(0, 0, 0);
+      doc.text(color, 60, 45 + i * 25);
+    });
+
+    doc.save("paleta.pdf");
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Seus scripts JS (baixe PDF etc.) -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+   <script src="paleta.js"></script>
+
+  
+
+</body>
+</html>
