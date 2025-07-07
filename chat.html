@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InspiraIA Chat</title>
+
+  <!-- Favicon e fontes -->
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Estilos do Paper Kit -->
+  <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="./assets/css/paper-kit.css?v=2.2.0" rel="stylesheet" />
+  <link href="./assets/demo/demo.css" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    .chatbox-container {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      padding: 2em;
+      border-radius: 1em;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chatbox {
+      background: rgba(255, 255, 255, 0.05);
+      height: 500px;
+      border-radius: 0.5em;
+      box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbox__messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbox__messages__user-message--ind-message {
+      padding: 1em;
+      max-width: 65%;
+      width: fit-content;
+      border-radius: 10px;
+      margin-bottom: 1em;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      word-wrap: break-word;
+    }
+
+    .chatbox__messages__user-message--ind-message.left {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .chatbox__messages__user-message--ind-message.right {
+      align-self: flex-end;
+      background: rgba(173, 216, 230, 0.2);
+    }
+
+    .chatbox__messages__user-message--ind-message .name {
+      font-size: 0.9em;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .chatbox__messages__user-message--ind-message .message {
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      text-align: left; /* ✅ Correção aplicada aqui */
+    }
+
+    form {
+      display: flex;
+      background: #222;
+    }
+
+    form input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: none;
+      padding: 1.2em;
+      color: white;
+      font-size: 1em;
+      outline: none;
+    }
+
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .page-header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+
+    .dark-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .chatbox-layer {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+
+
+
+
+<body class="index-page sidebar-collapse">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="300">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="index.html">
+          InspiraIA
+        </a>
+        <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="nossosite.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i> Nosso Site</a>
+          </li>
+           <li class="nav-item">
+            <a href="mapa.html" target="_blank" class="nav-link"><i class="nc-icon nc-book-bookmark"></i>Mapa</a>
+          </li>
+          <li class="nav-item">
+            <a href="chat.html" target="_blank" class="btn btn-danger btn-round">Chat IA</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <script>
+      const nav = document.querySelector('nav.navbar');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY === 0) {
+          nav.style.top = '0';
+          nav.style.opacity = '1';
+          nav.style.pointerEvents = 'auto'; // ativa clique
+          nav.style.transition = 'top 0.3s ease, opacity 0.3s ease';
+        } else {
+          nav.style.top = '-80px'; // esconde o menu para cima (ajuste o valor conforme a altura do menu)
+          nav.style.opacity = '0';
+          nav.style.pointerEvents = 'none'; // desativa clique quando oculto
+          nav.style.transition = 'top 0.3s ease, opacity 0.3s ease';
+        }
+      });
+    </script>
+  <!-- End Navbar -->
+
+  <!-- Imagem de fundo + Conteúdo -->
+  <div class="page-header section-dark" style="background-image: url('./imagens/imagembanner2.jpg')">
+    <div class="dark-overlay"></div>
+
+    <div class="container text-center chatbox-layer">
+      <div class="chatbox-container">
+        <div class="chatbox">
+          <div class="chatbox__messages" id="chatBox"></div>
+          <form id="chatForm">
+            <input type="text" id="messageInput" placeholder="Digite sua mensagem..." autocomplete="off" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const chatForm = document.getElementById("chatForm");
+    const messageInput = document.getElementById("messageInput");
+
+    function addMessage(name, text, isUser) {
+      const message = document.createElement("div");
+      message.className = "chatbox__messages__user-message--ind-message";
+      message.classList.add(isUser ? "right" : "left");
+
+      const nameElem = document.createElement("p");
+      nameElem.className = "name";
+      nameElem.textContent = name;
+
+      const textElem = document.createElement("p");
+      textElem.className = "message";
+      textElem.textContent = text;
+
+      message.appendChild(nameElem);
+      message.appendChild(textElem);
+      chatBox.appendChild(message);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const userMessage = messageInput.value.trim();
+      if (!userMessage) return;
+
+      addMessage("Você", userMessage, true);
+      messageInput.value = "";
+
+      setTimeout(() => {
+        addMessage("InspiraIA", `Você disse: "${userMessage}"`, false);
+      }, 800);
+    });
+  </script>
+
+ 
+
+  <!-- Bootstrap Core JS -->
+  <script src="./assets/js/core/jquery.min.js"></script>
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap.min.js"></script>
+  <script src="./assets/js/paper-kit.js?v=2.2.0"></script>
+</body>
+</html>
