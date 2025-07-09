@@ -208,44 +208,63 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    const chatBox = document.getElementById("chatBox");
-    const chatForm = document.getElementById("chatForm");
-    const messageInput = document.getElementById("messageInput");
 
-    function addMessage(name, text, isUser) {
-      const message = document.createElement("div");
-      message.className = "chatbox__messages__user-message--ind-message";
-      message.classList.add(isUser ? "right" : "left");
 
-      const nameElem = document.createElement("p");
-      nameElem.className = "name";
-      nameElem.textContent = name;
 
-      const textElem = document.createElement("p");
-      textElem.className = "message";
-      textElem.textContent = text;
 
-      message.appendChild(nameElem);
-      message.appendChild(textElem);
-      chatBox.appendChild(message);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
 
-    chatForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const userMessage = messageInput.value.trim();
-      if (!userMessage) return;
+<script>
+  const chatBox = document.getElementById("chatBox");
+  const chatForm = document.getElementById("chatForm");
+  const messageInput = document.getElementById("messageInput");
 
-      addMessage("Você", userMessage, true);
-      messageInput.value = "";
+  function addMessage(name, text, isUser) {
+    const message = document.createElement("div");
+    message.className = "chatbox__messages__user-message--ind-message";
+    message.classList.add(isUser ? "right" : "left");
 
-      setTimeout(() => {
-        addMessage("InspiraIA", `Você disse: "${userMessage}"`, false);
-      }, 800);
+    const nameElem = document.createElement("p");
+    nameElem.className = "name";
+    nameElem.textContent = name;
+
+    const textElem = document.createElement("p");
+    textElem.className = "message";
+    textElem.textContent = text;
+
+    message.appendChild(nameElem);
+    message.appendChild(textElem);
+    chatBox.appendChild(message);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  chatForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const userMessage = messageInput.value.trim();
+    if (!userMessage) return;
+
+    addMessage("Você", userMessage, true);
+    messageInput.value = "";
+
+    fetch("http://localhost:3000/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userMessage })
+    })
+    .then(response => response.json())
+    .then(data => {
+      addMessage("InspiraIA", data.reply, false);
+    })
+    .catch(err => {
+      console.error(err);
+      addMessage("InspiraIA", "Erro ao obter resposta da IA.", false);
     });
-  </script>
+  });
+</script>
+
+
+
 
  
 
