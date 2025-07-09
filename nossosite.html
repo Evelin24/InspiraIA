@@ -123,101 +123,81 @@
 
 <section style="padding: 40px 20px;">
   <div style="max-width: 900px; margin: 0 auto;">
-    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">O Impacto da Inteligência Artificial na Criatividade</h2>
+    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Uso da API da OpenAI no InspiraIA</h2>
     <p style="text-align: justify; font-size: 1.1rem; line-height: 1.8;">
-      A inteligência artificial tem revolucionado diversas áreas do conhecimento, especialmente no campo da criatividade e do design. Por meio de algoritmos avançados e redes neurais, é possível criar obras de arte, composições musicais e projetos visuais de maneira automatizada, despertando novas possibilidades de expressão e colaboração entre humanos e máquinas.
+      O InspiraIA integra a API da OpenAI para oferecer uma inteligência artificial capaz de conversar, sugerir ideias e auxiliar no processo criativo. Por meio dessa tecnologia, o usuário pode enviar mensagens e receber respostas geradas por modelos avançados de linguagem natural, como o GPT-3.5-turbo, que entendem e produzem textos de forma fluida e contextualizada.
     </p>
     <p style="text-align: justify; font-size: 1.1rem; line-height: 1.8; margin-top: 20px;">
-      Ainda que a IA não substitua a intuição humana, ela tem se mostrado uma poderosa aliada no processo criativo, oferecendo sugestões, otimizando fluxos de trabalho e democratizando o acesso a ferramentas antes complexas. O futuro da arte e do design promete ser cada vez mais colaborativo entre criadores e sistemas inteligentes.
+      A API funciona como uma ponte que conecta nosso sistema ao serviço da OpenAI na nuvem, enviando as mensagens dos usuários para os servidores da OpenAI e retornando as respostas geradas. Isso permite que o InspiraIA ofereça uma experiência interativa e personalizada, ajudando artistas, designers e criadores a obterem inspiração, tirar dúvidas ou desenvolver projetos com o suporte da inteligência artificial.
+    </p>
+  </div>
+</section>
+
+<section style="padding: 40px 20px;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Como a IA pode ajudar se usada de forma consciente</h2>
+    <p style="text-align: justify; font-size: 1.1rem; line-height: 1.8;">
+      A inteligência artificial é uma poderosa ferramenta que, quando usada com responsabilidade, pode transformar a maneira como criamos e desenvolvemos ideias. No InspiraIA, a IA não é um substituto da criatividade humana, mas sim um facilitador que expande possibilidades, sugere caminhos e oferece insights que talvez não surgissem sozinhos.
+    </p>
+    <p style="text-align: justify; font-size: 1.1rem; line-height: 1.8; margin-top: 20px;">
+      Usar a IA conscientemente significa respeitar a originalidade do próprio trabalho e dos outros, evitando o plágio ou a cópia direta sem atribuição. A IA pode ser usada para gerar ideias, ajudar na pesquisa de referências, sugerir variações criativas e organizar pensamentos, tornando o processo criativo mais eficiente e enriquecedor.
     </p>
   </div>
 </section>
 
 
 
+
 <style>
-  .video-card-container {
+  /* Centraliza o container das imagens */
+  .image-card-container {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: center; /* centraliza horizontal */
     gap: 20px;
-    margin: 80px auto;
-    max-width: 1200px;
-    padding: 20px;
+    margin: 40px 0;
   }
 
-  .video-card {
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(33.333% - 20px);
-    max-width: calc(33.333% - 20px);
-    transition: all 0.3s ease-in-out;
+  .image-card {
     cursor: pointer;
+    max-width: 200px;
+    border-radius: 8px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
 
-  .video-card.expanded {
-    transform: scale(1.05);
-    z-index: 10;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-  }
-
-  .video-card iframe {
+  .image-card img {
     width: 100%;
-    height: 200px;
-    border: none;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    height: auto;
+    display: block;
   }
 
-  .video-content {
-    padding: 20px;
-  }
-
-  .video-content h5 {
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-
-  .video-content p {
-    font-size: 15px;
-    color: #555;
-  }
-
-  @media (max-width: 992px) {
-    .video-card {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
+  .image-card.expanded {
+    transform: scale(1.5);
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.8);
   }
 </style>
-<div class="video-card-container">
-  <div class="video-card" onclick="toggleExpand(this)">
-    <img src="img1.jpg" alt="Imagem 1">
-  </div>
 
-  <div class="video-card" onclick="toggleExpand(this)">
-    <img src="img2.jpg" alt="Imagem 2">
+<div class="image-card-container">
+  <div class="image-card" onclick="toggleExpand(this)">
+    <img src="imagens/img1.jpg" alt="Imagem 1" />
   </div>
-
-  <div class="video-card" onclick="toggleExpand(this)">
-    <img src="img3.jpg" alt="Imagem 3">
+  <div class="image-card" onclick="toggleExpand(this)">
+    <img src="imagens/img2.jpg" alt="Imagem 2" />
+  </div>
+  <div class="image-card" onclick="toggleExpand(this)">
+    <img src="imagens/img3.jpg" alt="Imagem 3" />
   </div>
 </div>
 
 <script>
   function toggleExpand(card) {
-    document.querySelectorAll('.video-card').forEach(c => {
-      if (c !== card) c.classList.remove('expanded');
-    });
     card.classList.toggle('expanded');
   }
 </script>
+
 
 
 <!-- Scripts do Bootstrap -->
