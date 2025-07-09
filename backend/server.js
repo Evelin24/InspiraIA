@@ -3,34 +3,34 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const OpenAI = require('openai');
+// Ajuste na importação do OpenAI dependendo da versão:
+const { Configuration, OpenAIApi } = require('openai');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const openai = new OpenAI({
+const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+const openai = new OpenAIApi(configuration);
 
 app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
-
-  // 👇 Verifique se está recebendo do front
   console.log('🟡 Mensagem recebida do frontend:', userMessage);
 
   try {
-    const completion = await openai.chat.completions.create({
+    const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: userMessage }],
     });
 
-    // 👇 Verifique o que a IA respondeu
-    console.log('🟢 Resposta da IA:', completion.choices[0].message.content);
+    const respostaIA = completion.data.choices[0].message.content;
+    console.log('🟢 Resposta da IA:', respostaIA);
 
-    res.json({ reply: completion.choices[0].message.content });
+    res.json({ reply: respostaIA });
   } catch (err) {
-    console.error('🔴 Erro na requisição à OpenAI:', err);
+    console.error('🔴 Erro na requisição à OpenAI:', err.response?.data || err.message || err);
     res.status(500).json({ error: "Erro ao buscar resposta da IA." });
   }
 });
