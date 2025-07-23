@@ -106,8 +106,6 @@
 
 
 
-
-
 <!-- Font Awesome -->
 <link
   rel="stylesheet"
@@ -155,6 +153,15 @@
   .sidebar label input[type="file"] {
     display: none;
   }
+  /* Paleta de cores visível */
+  #colorPicker {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
   .canvas-container {
     flex-grow: 1;
     position: relative;
@@ -180,15 +187,12 @@
     pointer-events: none;
   }
 </style>
-</head>
-<body>
 
 <div class="editor-wrapper">
   <div class="sidebar">
     <button id="tool-brush" title="Pincel" class="active"><i class="fa fa-pencil"></i></button>
     <button id="tool-eraser" title="Borracha"><i class="fa fa-eraser"></i></button>
     <button id="tool-fill" title="Balde"><i class="fa fa-tint"></i></button>
-    <button id="tool-text" title="Texto"><i class="fa fa-font"></i></button>
     <button id="tool-select" title="Selecionar"><i class="fa fa-mouse-pointer"></i></button>
     <button id="undoBtn" title="Desfazer"><i class="fa fa-undo"></i></button>
     <button id="redoBtn" title="Refazer"><i class="fa fa-redo"></i></button>
@@ -199,7 +203,10 @@
       <i class="fa fa-upload"></i>
       <input type="file" id="uploadImg" accept="image/*" />
     </label>
+
+    <input type="color" id="colorPicker" title="Escolher cor" value="#000000" />
   </div>
+
   <div class="canvas-container">
     <canvas id="canvas"></canvas>
     <canvas id="selCanvas"></canvas>
@@ -212,6 +219,21 @@
   const selCanvas = document.getElementById('selCanvas');
   const selCtx = selCanvas.getContext('2d');
 
+  const colorPicker = document.getElementById('colorPicker');
+  const brushBtn = document.getElementById('tool-brush');
+  const eraserBtn = document.getElementById('tool-eraser');
+  const clearBtn = document.getElementById('clearBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const uploadInput = document.getElementById('uploadImg');
+
+  let currentTool = 'brush';
+  let drawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let brushColor = colorPicker.value;
+  let brushSize = 5;
+
+  // Ajusta tamanho dos canvas
   function resize() {
     canvas.width = selCanvas.width = window.innerWidth - 70;
     canvas.height = selCanvas.height = window.innerHeight;
@@ -219,9 +241,21 @@
   window.addEventListener('resize', resize);
   resize();
 
-  let drawing = false;
-  let lastX = 0;
-  let lastY = 0;
+  // Alternar ferramentas e botão ativo
+  function selectTool(tool) {
+    currentTool = tool;
+    // Atualiza classe active
+    [brushBtn, eraserBtn].forEach(btn => btn.classList.remove('active'));
+    if(tool === 'brush') brushBtn.classList.add('active');
+    else if(tool === 'eraser') eraserBtn.classList.add('active');
+  }
+
+  brushBtn.addEventListener('click', () => selectTool('brush'));
+  eraserBtn.addEventListener('click', () => selectTool('eraser'));
+
+  colorPicker.addEventListener('change', e => {
+    brushColor = e.target.value;
+  });
 
   canvas.addEventListener('mousedown', e => {
     drawing = true;
@@ -233,11 +267,23 @@
 
   canvas.addEventListener('mousemove', e => {
     if (!drawing) return;
-    ctx.lineWidth = 5;
+
+    ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000';
+
+    if(currentTool === 'brush'){
+      ctx.strokeStyle = brushColor;
+      ctx.globalCompositeOperation = 'source-over';
+    } else if(currentTool === 'eraser'){
+      ctx.strokeStyle = 'rgba(0,0,0,1)';
+      ctx.globalCompositeOperation = 'destination-out'; // Borracha apaga pixels
+    }
+
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
+
+    lastX = e.offsetX;
+    lastY = e.offsetY;
   });
 
   canvas.addEventListener('mouseup', () => {
@@ -247,7 +293,17 @@
     drawing = false;
   });
 
-  const uploadInput = document.getElementById('uploadImg');
+  clearBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'desenho.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+
   uploadInput.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -265,6 +321,7 @@
     uploadInput.value = '';
   });
 </script>
+
 
   <script src="desenho.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
